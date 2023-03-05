@@ -1,5 +1,5 @@
-:- module(sched_engines,
-	  [ run_in_fiber/1,	% :Goal
+:- module(fibers,
+	  [ call_in_fiber/1,	% :Goal
 	    set_immediate/1,	% :Goal
 	    set_timeout/2	% :Goal,+Time
 	  ]).
@@ -15,11 +15,11 @@
        set_immediate(0),
        set_timeout(0, +).
 
-%!  run_in_fiber(:Goal)
+%!  call_in_fiber(:Goal)
 %
 %   Run Goal in a fiber.
 
-run_in_fiber(Goal) :-
+call_in_fiber(Goal) :-
     engine_create(true, engine_run(Goal), Engine),
     debug(sched, 'Run ~p in ~p', [Goal, Engine]),
     event_loop([Engine]).
