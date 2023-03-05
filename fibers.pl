@@ -45,7 +45,7 @@
 :- use_module(library(debug)).
 
 :- meta_predicate
-       run_in_fiber(0),
+       call_in_fiber(0),
        set_immediate(0),
        set_timeout(0, +).
 
@@ -81,9 +81,9 @@ advance_tasks([H|T]) -->
 advance(start(Time, Engine)) -->
     !,
     { get_time(Now) },
-    (   {Time > Now}
-    ->   { engine_next_reified(Engine, Result) },
-	 consume(Result, Engine)
+    (   {Now > Time}
+    ->  { engine_next_reified(Engine, Result) },
+	consume(Result, Engine)
     ;   [start(Time, Engine)]
     ).
 advance(Engine) -->
